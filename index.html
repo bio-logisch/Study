@@ -1,11 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="card.css">
+    <title>추천서 사이트</title>
+    <!-- bootstrap CDN key -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 </head>
+
 <body>
-    <h1> 만들었다... </h1>
+    <div>
+        <div id="header">
+            <div>
+                <h1> 분야별 필수도서 추천사이트 </h1>
+            </div>
+        </div>
+        <div id="nav">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <div>
+                    <input type="text" class="form-control" placeholder="아이디입력"
+                        aria-label="Recipient's username with two button addons" style="margin-left: 250px; width: 200px;">
+                </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <div>
+                    <input type="text" class="form-control" placeholder="비밀번호 입력"
+                        aria-label="Recipient's username with two button addons" style="margin-left: -100px;width: 200px;">
+                </div>
+            <div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-warning">Login</button>
+                &nbsp;&nbsp;
+                <a href="./join.html" button type="button" class="btn btn-warning">Join</button></a>
+            </div>
+        </div>
+    </div>
+        <div>
+            <div id="section">
+                <div id="article">
+                    <!-- flip-card-container -->
+                    <div class="flip-card-container" style="--hue: 220">
+                        <div class="flip-card">
+                            <div class="card-front">
+                                <figure>
+                                    <div class="img-bg"></div>
+                                    <img src="https://images.unsplash.com/photo-1486162928267-e6274cb3106f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                        alt="Brohm Lake">
+                                    <figcaption> S/W 개발자 필독서</figcaption>
+                                </figure>
+
+                                <ul>
+                                    <li>Detail 1</li>
+                                </ul>
+                            </div>
+
+                            <div class="card-back">
+                                <figure>
+                                    <div class="img-bg"></div>
+                                    <img src="https://images.unsplash.com/photo-1486162928267-e6274cb3106f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                        alt="Brohm Lake">
+                                </figure>
+
+                                <button>Book</button>
+
+                                <div class="design-container">
+                                    <span class="design design--1"></span>
+                                    <span class="design design--2"></span>
+                                    <span class="design design--3"></span>
+                                    <span class="design design--4"></span>
+                                    <span class="design design--5"></span>
+                                    <span class="design design--6"></span>
+                                    <span class="design design--7"></span>
+                                    <span class="design design--8"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /flip-card-container -->
+                <div id="article">
+                    <!-- flip-card-container -->
+                    <div class="flip-card-container" style="--hue: 170">
+                        <div class="flip-card">
+
+                            <div class="card-front">
+                                <figure>
+                                    <div class="img-bg"></div>
+                                    <img src="https://images.unsplash.com/photo-1545436864-cd9bdd1ddebc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                        alt="Image 2">
+                                    <figcaption>Web 디자이너 필독서</figcaption>
+                                </figure>
+
+                                <ul>
+                                    <li>Detail 1</li>
+                                </ul>
+                            </div>
+
+                            <div class="card-back">
+                                <figure>
+                                    <div class="img-bg"></div>
+                                    <img src="https://images.unsplash.com/photo-1545436864-cd9bdd1ddebc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                        alt="image-2">
+                                </figure>
+
+                                <button>Book</button>
+
+                                <div class="design-container">
+                                    <span class="design design--1"></span>
+                                    <span class="design design--2"></span>
+                                    <span class="design design--3"></span>
+                                    <span class="design design--4"></span>
+                                    <span class="design design--5"></span>
+                                    <span class="design design--6"></span>
+                                    <span class="design design--7"></span>
+                                    <span class="design design--8"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /flip-card-container -->
+                </div>
+                <div id="article">
+                    <!-- flip-card-container -->
+                    <div class="flip-card-container" style="--hue: 350">
+                        <div class="flip-card">
+
+                            <div class="card-front">
+                                <figure>
+                                    <div class="img-bg"></div>
+                                    <img src="https://images.unsplash.com/photo-1486162928267-e6274cb3106f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                        alt="Brohm Lake">
+                                    <figcaption>Brohm Lake</figcaption>
+                                </figure>
+
+                                <ul>
+                                    <li>Detail 1</li>
+                                </ul>
+                            </div>
+
+                            <div class="card-back">
+                                <!-- only if the image is necessary -->
+                                <figure>
+                                    <div class="img-bg"></div>
+                                    <img src="https://images.unsplash.com/photo-1486162928267-e6274cb3106f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                        alt="Brohm Lake">
+                                </figure>
+
+                                <button>Book</button>
+
+                                <!-- can add svg here and remove these eight spans -->
+                                <div class="design-container">
+                                    <span class="design design--1"></span>
+                                    <span class="design design--2"></span>
+                                    <span class="design design--3"></span>
+                                    <span class="design design--4"></span>
+                                    <span class="design design--5"></span>
+                                    <span class="design design--6"></span>
+                                    <span class="design design--7"></span>
+                                    <span class="design design--8"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /flip-card-container -->
+                </div>
+                <a href="https://abubakersaeed.netlify.app/designs/d4-flip-card" class="abs-site-link"
+                    rel="nofollow noreferrer" target="_blank">abs/designs/d4-flip-card</a>
+            </div>
+        </div>
+        <div id="footer">
+            푸터영역
+        </div>
+    </div>
 </body>
+
 </html>

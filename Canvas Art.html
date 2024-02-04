@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Art</title>
+    <style>
+        canvas {
+            background-color: white;
+            border: 2px solid orange;
+        }
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-weight: 400;
+            text-shadow: 0.1em 0.1em 0 orange;
+        }
+        button {
+            font-family: inherit;
+            font-size: inherit;
+            border: 0.22rem solid;
+            border-radius: 0.3rem;
+            padding: 0.2rem 1rem;
+            box-shadow: 0.2rem 0.2rem 0;
+        }
+        button:hover,
+        button:focus-visible {
+            background: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <header>
+            <h1> &nbsp Canvas Art &nbsp</h1>
+        </header>
+    </div>
+    <div> <!-- 색상판 설정 -->
+        <label for="colorPicker"> &nbsp Color picker </label>
+        <input type="color" id="colorPicker" onchange="setColor(this.value)">
+    </div>
+    <div class="tools">
+        <br> <!--펜 색상 조절-->
+        &nbsp black<input type="radio" name="color" onclick="setColor(this.value)" value="black" checked>
+        blue<input type="radio" name="color" onclick="setColor(this.value)" value="blue">
+        eraser<input type="radio" name="color" onclick="setColor(this.value)" value="white">
+        <!--js에서 태그의 액션을 감지하도록 변경-->
+        &nbsp Columns <input type="range" name="bold" min="1" max="50" value="1" id="pensize">
+    </div>
+    <div>
+        <br> <!-- 선/도형별 도구 선택 -->
+        <div class="shapes">
+        &nbsp line<input type="radio" name="figure" onclick="selectedFigure='line'" value="line">
+        triangle<input type="radio" name="figure" onclick="selectedFigure='triangle'" value="triangle">
+        rectangle<input type="radio" name="figure" onclick="selectedFigure='rectangle'" value="rectangle">
+        circle<input type="radio" name="figure" onclick="selectedFigure='circle'" value="circle">
+        </div>
+        <div class="controls">
+            <br> <!-- 실행 버튼모음 -->
+            &nbsp <button data-undo>Undo</button>
+            &nbsp <button data-clear>Clear</button>
+            &nbsp <button data-save>Save</button>
+        </div>
+    </div>
+    <br> <!-- 캔버스 -->
+    <canvas width="1000" height="500" id="canvas" onclick="drawShape(event)"></canvas>
+    <footer>
+        <p> Copyright © Human Programmers Corp. All Rights Reserved. </p> 
+    </footer>
+</body>
+</html>
+
+<script>
+    let canvas = document.querySelector('#canvas'); //<canvas>의 객체를 가져옴 
+    let ctx = canvas.getContext('2d'); //2d로 그림을 그리겠다는 의미
+    let selectedFigure = ''; //도형 선택 관련 라디오버튼 선택 시 drawShanpe함수 호출하기 위한 변수 선언
+    let flag = false; //선 그릴 때 마우스 클릭 시 그려지도록 제어하기 위한 boolean변수 선언
+    var drag = false ; //도형 그릴 때 드래깅 기능 넣기 위한 boolean변수 선언
+    let drawingStack = []; // 실행 복구를 위한 드로잉 액션 저장할 배열 선언
+
+    // 선/도형별 그리기 실행함수
+    function drawShape(event) {
+        switch (selectedFigure) {
+            case 'line':
+                break;
+            case 'triangle':
+                drawTriangle(event);
+                break;
+            case 'rectangle':
+                drawRectangle(event);
+                break;
+            case 'circle':
+                drawCircle(event);
+                break;
+            default:
+                break;
+        }
+    }
+    // 캔버스 위치가 브라우저환경에 따라 바뀔 수 있어서 선/도형 그릴 때 offset절대 위치로 마우스위치 지정
+    // 선 그리기를 위한 마우스 리스너 정의
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', moveDraw);
+    canvas.addEventListener('mouseup', endDraw);
+
+    //선 그리기
+    function startDraw(event) {
+        if (selectedFigure === 'line') {
+            ctx.beginPath();
+            flag = true;
+            startX = event.clientX - canvas.offsetLeft; //눌렀을 때 현재 마우스 X좌표를 startX에 담음
+            startY = event.clientY - canvas.offsetTop; //눌렀을 때 현재 마우스 Y좌표를 startY에 담음
+            ctx.moveTo(startX, startY);
+            saveState(); // 드로잉 상태 저장
+        }
+    }
+    function moveDraw(event) {
+        if (flag) {
+            if (selectedFigure === 'line') {
+                endX = event.clientX - canvas.offsetLeft;
+                endY = event.clientY - canvas.offsetTop;
+                ctx.lineTo(endX, endY);
+                ctx.stroke(); // 선 그리기 실행
+            }
+        }
+    }
+    function endDraw() {
+        flag = false;
+    }
+
+    // 지정된 크기의 삼각형 스탬프
+    function drawTriangle(event) {
+        ctx.beginPath();
+        ctx.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+        ctx.lineTo(event.clientX - canvas.offsetLeft + 110, event.clientY - canvas.offsetTop);
+        ctx.lineTo(event.clientX - canvas.offsetLeft + 110, event.clientY - canvas.offsetTop + 100);
+        ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+        ctx.stroke();
+    }
+
+    // 사각형 그리기
+    // 지정된 크기의 사각형 스탬프
+    function drawRectangle(event) {
+        ctx.beginPath();
+        ctx.strokeRect(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop, 100, 100);
+    }
+    // 드래깅으로 커스텀 사각형 그리기(구현중...)
+
+
+
+    // 지정된 크기의 원 스탬프
+    function drawCircle(event) {
+        ctx.beginPath();
+        ctx.arc(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop, 50, 0, Math.PI * 2, true);
+        ctx.stroke();
+    }
+
+    //펜색상 변경 
+    function setColor(c) {
+        ctx.strokeStyle = c;
+    }
+
+    //펜두께 변경
+    document.getElementById("pensize").onchange = () => {
+        let size = document.getElementById("pensize").value;
+        ctx.lineWidth = size;
+    }
+ 
+    //undo, save, clear 실행버튼 객체 불러오기
+    const clearButton = document.querySelector('[data-clear]');
+    const saveButton = document.querySelector('[data-save]');
+    const undoButton = document.querySelector('[data-undo]');
+    
+    //버튼 마우스 리스너 정의
+    clearButton.addEventListener('click', clearCanvas);
+    saveButton.addEventListener('click', saveCanvas);
+    undoButton.addEventListener('click', undoAction);
+    
+    //save 버튼(캔버스 이미지 저장 기능)
+    function saveCanvas() {
+        const dataURL = canvas.toDataURL();
+        const a = document.createElement('a');
+        a.href = dataURL;
+        a.download = 'canvas_art.png';
+        a.click();
+        alert('Saved as "canvas_art.png."')
+    }
+
+    //clear 버튼(캔버스 비우기 기능)
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawingStack = [];
+        alert('All contents of the canvas have been cleared.')
+    }
+
+    //undo 버튼(바로 이전으로 돌아가기 기능)
+    function undoAction() {
+        if (drawingStack.length > 0) {
+            // 마지막 드로잉 액션 지우기 
+            drawingStack.pop();
+            // 캔버스 리셋
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // 이전 상태 다시 그리기(시작과 끝점만 저장되어서 복구가 이상하게 된다는 오류..발생)
+            drawingStack.forEach(action => {
+                ctx.strokeStyle = action.color;
+                ctx.lineWidth = action.size;
+                ctx.beginPath();
+                ctx.moveTo(action.startX, action.startY);
+                ctx.lineTo(action.endX, action.endY);
+                ctx.stroke();
+            });
+        }
+        alert('It has been restored to its previous state.')
+    }
+
+    //현재 액션상태 저장(이전으로 돌아가기 대비용)
+    function saveState() {
+        const currentState = {
+            color: ctx.strokeStyle,
+            size: ctx.lineWidth,
+            startX: startX,
+            startY: startY,
+            endX: endX,
+            endY: endY
+        };
+        drawingStack.push(currentState); //현재 상태 배열에 저장
+    }
+</script>

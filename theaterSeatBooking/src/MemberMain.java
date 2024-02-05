@@ -103,7 +103,7 @@ public class MemberMain {
 	}
 
 	public void menu() {
-		System.out.println("1.신규가입  2.전체보기  3.검색하기  4.수정하기  5. 삭제하기   6. 종료하기");
+		System.out.println("1.신규가입  2.전체보기  3.검색하기  4.수정하기  5.삭제하기   6.종료하기");
 		System.out.println("로그인을 하시려면 6을 입력하세요.");
 	}
 

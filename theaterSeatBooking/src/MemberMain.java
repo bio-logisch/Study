@@ -8,13 +8,9 @@ public class MemberMain {
 	Member m = null; 
 	
 	public static MemberMain mm = null; //public:누구나 접근가능, static:공용변수로서 객체생성없이 접근가능
-	//접근제어자는 public, private, default 등이 있다. 
-	//이 코드 대신에 public static MemberMain mm = new MemberMain(); 으로 선언해도 되긴함. 하지만 굳이..
-	
-	
 	//싱글톤 : 객체를 하나만 만들겠다는 의미. 다른 사람이 객체를 못만들도록 하는 방법.
 	//객체 하나만 만드는데 2개이상 못만들게 하기 위해서는 접근제어자를 public static으로 둔 getInstance 메서드를 만들어서
-	//나에게 요청하면 내 주소를 주면 된다. 자기 자신은 여러개 만들어도 괜찮으니까..
+	//나에게 요청하면 내 주소를 주면 된다. 
 	
 	private MemberMain() { //접근제어자를 private로 선언하면 같은 클래스 내에서만 접근이 가능하다.
 
@@ -25,8 +21,7 @@ public class MemberMain {
 		if(mm == null) {
 			mm = new MemberMain();
 		}
-		return mm;
-		
+		return mm;	
 	}
 
 	public void init() {
@@ -64,7 +59,6 @@ public class MemberMain {
 				}
 			}
 		}
-
 	}
 
 	private void mod() {
@@ -81,7 +75,6 @@ public class MemberMain {
 				}
 			}
 		}
-
 	}
 
 	public void ser() {
@@ -96,7 +89,6 @@ public class MemberMain {
 				}
 			}
 		}
-
 	}
 
 	public Member findUser(String name) {
@@ -108,7 +100,6 @@ public class MemberMain {
 			}
 		}
 		return null;
-
 	}
 
 	public void menu() {
@@ -117,7 +108,7 @@ public class MemberMain {
 	}
 
 	public void add() {
-	    System.out.println("신규가입입니다 ..... ");
+	    System.out.println("신규가입 페이지입니다.");
 	    Member m = new Member();
 	    
 	    System.out.println("이름을 입력하세요 <특수문자 1개 이상 필수>");
@@ -150,5 +141,4 @@ public class MemberMain {
 			}
 		}
 	}
-
 }

@@ -8,7 +8,7 @@ public class MainMenu {
 	
 	SeatMain seatMain = new SeatMain(); ///예약 객체를 MainMenu가 만든 것임
 	Member nowUser = null; ///null이니까 로그인 한 사람이 없다는 의미임(로그인 한 사람 정보)
-	MainMenu() { ///메서드에 대한 주석을 달 때는 일반적으로 메서드 바로 위에 주석을 단다.
+	MainMenu() { 
 		// 메뉴선택하기.. ///생성자에 메뉴기능을 정의함. 객체를 생성하자마자(프로그램 실행하자마자) 메뉴를 띄운다는게 의도
 		boolean f = true;
 		while (f) {

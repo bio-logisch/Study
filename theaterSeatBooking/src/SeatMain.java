@@ -3,16 +3,16 @@ import java.util.Scanner;
 
 public class SeatMain {
 	Scanner in = new Scanner(System.in);
-	BookingInfo[][] booking = new BookingInfo[3][10]; ///좌석을 2차원배열로 선언
-	Member nowUser = null; ///현재 들어온 사람의 정보를 알고 싶어서 선언한 변수임
+	BookingInfo[][] booking = new BookingInfo[3][10]; //좌석을 2차원배열로 선언
+	Member nowUser = null; //현재 들어온 사람의 정보를 알고 싶어서 선언한 변수임
 	int[][] badSeatInfo = { { 0, 0, 0, 0, 1, 1 },
 				            { 0, 1, 8, 9, 0, 9 } }; // 좌석이 아닌 곳 정보 좌표
 
-	SeatMain() { ///생성자는 객체가 만들어질 때 처음 딱 한번 실행되는 메서드(사용예, 메뉴불러오기 혹은 초기정보세팅용 등으로 씀)
-		///여기서 init의 기능은 예를 들어 게임이면 유저의 점수/정보 등을 미리 세팅해둘 때 쓰는 것처럼, 미리 전제로 깔아두는 용도임
+	SeatMain() { //생성자는 객체가 만들어질 때 처음 딱 한번 실행되는 메서드(사용예, 메뉴불러오기 혹은 초기정보세팅용 등으로 씀)
+		//여기서 init의 기능은 예를 들어 게임이면 유저의 점수/정보 등을 미리 세팅해둘 때 쓰는 것처럼, 미리 전제로 깔아두는 용도임
 		init();
 	}
-	///초기화 작업을 하기 위한 메서드
+	//초기화 작업을 하기 위한 메서드
 	private void init() {  ///private이니까 SeatMain클래스에서만 쓸 수 있음
 		BookingInfo noSeat = new BookingInfo(); ///이 객체는 앉을 수 없는 자리를 지정해두기 위해 생성함
 		noSeat.userName = "NOseat"; ///7번 객체 만들어짐
@@ -49,7 +49,7 @@ public class SeatMain {
 			System.out.println();
 		}
 	}
-	///로그인 유무까지 확인하여 메뉴를 제공하는 메서드
+	//로그인 유무까지 확인하여 메뉴를 제공하는 메서드
 	public void menu(Member m) {
 		nowUser = m;  //nowUser는 null이 들어간 상태
 		boolean f = true;
@@ -107,15 +107,14 @@ public class SeatMain {
 		in.nextLine();
 	}
 	
-	///좌석 변경하는 메서드
+	//좌석 변경하는 메서드
 	private void changeSeat() {
 		System.out.println("<좌석변경은 예약자 확인 후 이루어 집니다> \n 예약자 이름 입력");
 		String userName = in.nextLine();
 		int[] idx = searchUserName(userName); ///이름을 입력하면 행열번호 리턴받음
 		if (idx != null) {
 			BookingInfo binfo = findUserBooking(idx[0], idx[1]); 
-			//예매내역없는 사람이름으로 검색하면 nullPointerException이 떠서 위 코드를 if문 안으로 넣고 아래 135번 라인 주석처리함
-			prt(); ///전체 좌석현황 그림 띄워줌
+			prt(); ///전체 좌석현황
 			System.out.println("좌석을 선택하세요.");
 			System.out.println("행(세로)과 열(가로)을 차례대로 입력하세요. \n행입력");
 			int row = in.nextInt();
@@ -123,11 +122,11 @@ public class SeatMain {
 			System.out.println("열을 입력하세요");
 			int col = in.nextInt();
 			in.nextLine();
-			if (findUserBooking(row, col) == null) { ///그 자리가 빈자리인지 확인하는 코드, 빈자리이므로 좌석변경가능
+			if (findUserBooking(row, col) == null) { //그 자리가 빈자리인지 확인하는 코드, 빈자리이므로 좌석변경가능
 				binfo.row = row; //변경할 좌석 행번호 추가
 				binfo.col = col; //변경할 좌석 열번호 추가
 				booking[row][col] = binfo;
-				booking[idx[0]][idx[1]] = null; ///기존예약자리는 빈자리로 변경
+				booking[idx[0]][idx[1]] = null; //기존예약자리는 빈자리로 변경
 				System.out.println("좌석변경이 완료 되었습니다");
 			} else {
 				System.out.println("이미 예약된 자리는 선택 할 수 없습니다.");
@@ -163,7 +162,7 @@ public class SeatMain {
 		}
 		in.nextLine();
 	}
-	///예약현황을 보여주는 메서드
+	//예약현황을 보여주는 메서드
 	private void bookingPrt() {
 		prt();
 		System.out.println();
@@ -185,7 +184,7 @@ public class SeatMain {
 		}
 		in.nextLine();
 	}
-	///현재 로그인한 사람인지 아닌지 체크해주는 메서드
+	//현재 로그인한 사람인지 아닌지 체크해주는 메서드
 	private boolean loginCheck() {
 		if (nowUser == null) {
 			System.out.println("회원 서비스 입니다 ");
@@ -193,7 +192,7 @@ public class SeatMain {
 		}
 		return true;  ///회원임
 	}
-	///검색 기능 메서드
+	//검색 기능 메서드
 	private void ser() { 
 		System.out.println("<예매확인> 예약자 이름을 입력하세요");
 		String userName = in.nextLine();
@@ -201,14 +200,14 @@ public class SeatMain {
 		if (idx == null) {
 			System.out.println("예약 내역이 없어요");
 		} else {
-			///예약자가 있으면, 해당되는 위치의 주소값을 리턴받음
+			//예약자가 있으면, 해당되는 위치의 주소값을 리턴받음
 			BookingInfo binfo = findUserBooking(idx[0], idx[1]); 
 			System.out.println(
 					"예약정보 : 행 " + idx[0] + "/ 열 " + idx[1] + "(" + binfo.userName + "/" + binfo.userPass + ")");
 		}
 		in.nextLine();
 	}
-	///행과 열의 정보로 예약자의 객체를 찾아주는 메서드, 예약자의 객체주소를 리턴해줌 - 수정, 검색용으로 사용가능
+	//행과 열의 정보로 예약자의 객체를 찾아주는 메서드, 예약자의 객체주소를 리턴해줌 - 수정, 검색용으로 사용가능
 	private BookingInfo findUserBooking(int row, int col) {
 		if (booking[row][col] != null) {
 			return booking[row][col];  //예매된 자리면 예매자명 리턴
@@ -216,7 +215,7 @@ public class SeatMain {
 		return null; //빈자리면 null로 리턴
 
 	}
-	///사용자가 입력한 이름의 객체가 어디행과 열에 있는지 찾아주는 메서드
+	//사용자가 입력한 이름의 객체가 어디행과 열에 있는지 찾아주는 메서드
 	private int[] searchUserName(String userName) {
 		int[] idx = null;
 		for (int i = 0; i < booking.length; i++) {
@@ -224,17 +223,17 @@ public class SeatMain {
 				if (booking[i][j] != null) {
 					if (booking[i][j].userName.equals(userName)) {
 						idx = new int[2];
-						idx[0] = i; ///행
-						idx[1] = j; ///열
-						return idx; ///리턴값은 하나인데 보내야하는 행열 정보가 두개라서 배열로 만들어서 하나로 묵어서 넘기기
-									///배열 말고 객체를 리턴값으로 보내도 된다...!
+						idx[0] = i; //행
+						idx[1] = j; //열
+						return idx; //리턴값은 하나인데 보내야하는 행열 정보가 두개라서 배열로 만들어서 하나로 묵어서 넘기기
+							    //배열 말고 객체를 리턴값으로 보내도 된다...!
 					}
 				}
 			}
 		}
 		return null;
 	}
-	///예매하는 메서드
+	//예매하는 메서드
 	private void add() {
 		prt();
 		System.out.println("행과 열을 차례대로 입력하세요. \n행입력");
@@ -268,8 +267,6 @@ public class SeatMain {
 		}
 		in.nextLine();
 	}
-	
-	
 	
 	//내가 예매한 자리를 하트로 표시하는 메서드
 	public void myprt() {

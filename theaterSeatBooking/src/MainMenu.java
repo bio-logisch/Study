@@ -28,7 +28,7 @@ public class MainMenu {
 	}
 	
 	private void booking() {
-		seatMain.menu(null); ///로그인 정보를 SeatMain 클래스에 넘김 - 매개변수는 넘겨주는 값을 말한다.
+		seatMain.menu(null); ///로그인 정보를 SeatMain 클래스에 넘김 
 	}
 
 	private void login() {
@@ -43,8 +43,6 @@ public class MainMenu {
 
 	private void join() {
 		memberMain.init(); 
-		///MemberMain의 객체는 하나만 있어야 해서 여기에 new연산자로 선언한게 아니라 필드(멤버변수)에 한번 객체생성함
-		///멤버변수는 클래스 영역 내에서 사용되며 클래스가 실행될 때 한번 선언된다(한번 할당된다).
 	}
 
 	public void menu() {

@@ -7,16 +7,10 @@ public class MemberMain {
 	Member[] mlist = new Member[100];
 	Member m = null; 
 	
-	public static MemberMain mm = null; //public:누구나 접근가능, static:공용변수로서 객체생성없이 접근가능
-	//싱글톤 : 객체를 하나만 만들겠다는 의미. 다른 사람이 객체를 못만들도록 하는 방법.
-	//객체 하나만 만드는데 2개이상 못만들게 하기 위해서는 접근제어자를 public static으로 둔 getInstance 메서드를 만들어서
-	//나에게 요청하면 내 주소를 주면 된다. 
-	
-	private MemberMain() { //접근제어자를 private로 선언하면 같은 클래스 내에서만 접근이 가능하다.
-
+	public static MemberMain mm = null; 
+	private MemberMain() { 
 	}
 	
-	//자기자신의 객체를 만들었음
 	public static MemberMain getInstance() {
 		if(mm == null) {
 			mm = new MemberMain();

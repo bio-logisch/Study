@@ -15,7 +15,7 @@ public class MemberDAO {
 	private Connection conn;	
 	
 	// 싱글톤은 객체는 하나, 필요하다면 주소만 공유  >> 불필요한 객체를 생성하지 않아서 성능이나 안정성면에 좋음 (GC동작할 필요가 없음)
-	// 싱글톤에서 객체는 본인이 만들고 공용변수 하나를 선언하여 공용변수로 필요한 객체에게 자신의 주소를 알려 줍니다.	
+	// 싱글톤에서 객체는 본인이 만들고 공용변수 하나를 선언하여 공용변수로 필요한 객체에게 자신의 주소를 알려줌	
 	public static MemberDAO mdao;
 	public static MemberDAO getInstance() {
 		if(mdao == null) {
@@ -23,8 +23,8 @@ public class MemberDAO {
 		}
 		return mdao;
 	}
-	// 외부에서는 getInstance 메서드로 접근해서 객체의 주소를 요청합니다.. 
-	// 변수와 메서드는 클래스 외부에서 접근 가능해야 하기에 static 지정합니다.
+	// 외부에서는 getInstance 메서드로 접근해서 객체의 주소를 요청
+	// 변수와 메서드는 클래스 외부에서 접근 가능해야 하기에 static 지정
 	
 	private MemberDAO(){
 		//1. 드라이버로드(1번만)  2. 커넥션  3. 쿼리 전송   4. 리턴값 처리...
@@ -38,7 +38,7 @@ public class MemberDAO {
 	}
 	public boolean connect() {
 		try {
-			conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","system","1234");
+			conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","system","1111");
 			return true;   
 			
 		}catch (Exception e) {
@@ -48,17 +48,17 @@ public class MemberDAO {
 	}
 	
 	public ArrayList<MemberVO> selectAll(){
-		// 1. 드라이버로드 2. 커넥션 가져오기  3. 쿼리값    4. 리턴..
+		// 1. 드라이버로드 2. 커넥션 가져오기  3. 쿼리값    4. 리턴
 		ResultSet rs = null; // 쿼리의 결과를 리턴받기 위한 객체
 		ArrayList<MemberVO> allList = new ArrayList<>();
 		if(connect()) {
 			try {
-				String sql="select * from member_tbl_02";  // 완성된쿼리
+				String sql="select * from member_tbl_02";  // 완성된 쿼리
 				Statement stmt = conn.createStatement();
 				rs = stmt.executeQuery(sql);
-				// 단일 객체또는 숫자를 리턴 or 리스트를 리턴 해야 하기에  while문사용
+				// 단일 객체또는 숫자를 리턴 or 리스트를 리턴 해야 하므로 while문사용
 				while(rs.next()) {  // rs는 튜플을 통채로 가져온다.
-					MemberVO b = new MemberVO(); //튜플하나당 객체 한개 
+					MemberVO b = new MemberVO(); //튜플 하나당 객체 한개 
 					b.setAddress(rs.getString("address"));
 					b.setCity(rs.getString("city"));
 					b.setCustname(rs.getString("custname"));
@@ -76,23 +76,23 @@ public class MemberDAO {
 	}
 	
 	public ArrayList<ViewMoneyVO> selectTotalAll(){
-		// 1. 드라이버로드 2. 커넥션 가져오기  3. 쿼리값    4. 리턴..
+		// 1. 드라이버로드 2. 커넥션 가져오기  3. 쿼리값    4. 리턴
 		ResultSet rs = null; // 쿼리의 결과를 리턴받기 위한 객체
 		ArrayList<ViewMoneyVO> allList = new ArrayList<>();
 		if(connect()) {
 			try {
 				String sql="select m1.custno, m1.custname, m1.grade, sum(m2.price) p from member_tbl_02 m1, money_tbl_02 m2";
-				sql +=" where m1.custno = m2.custno";// 완성된쿼리
-				sql +=" group by (m1.custno, m1.custname, m1.grade)";// 완성된쿼리
-				sql +=" order by m1.custno asc";// 완성된쿼리
+				sql +=" where m1.custno = m2.custno";
+				sql +=" group by (m1.custno, m1.custname, m1.grade)";
+				sql +=" order by m1.custno asc";
 				
 				System.out.println(sql);
 	
-				Statement stmt = conn.createStatement();  // 예외발생..
+				Statement stmt = conn.createStatement();  // 예외발생
 				rs = stmt.executeQuery(sql);
-				// 단일 객체또는 숫자를 리턴 or 리스트를 리턴 해야 하기에  while문사용
+				// 단일 객체또는 숫자를 리턴 or 리스트를 리턴 해야 하므로 while문사용
 				while(rs.next()) {  // rs는 튜플을 통채로 가져온다.
-					ViewMoneyVO b = new ViewMoneyVO(); //튜플하나당 객체 한개 
+					ViewMoneyVO b = new ViewMoneyVO(); //튜플 하나당 객체 한개 
 					b.setCustgrade(rs.getString("grade"));
 					b.setCustname(rs.getString("custname"));
 					b.setCustno(rs.getInt("custno"));

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cafe.dao.IF_bbsDAO">
+
+	<insert id="insertOne" parameterType="com.cafe.vo.BBSVO">
+		insert into bbs values
+		(#{bbs_flag},bbs_seq.nextval,#{bbs_wr},#{bbs_pass},#{bbs_title}
+		,#{bbs_comment},default,0)
+	</insert>
+	
+	<select id="selectAll" resultType="com.cafe.vo.BBSVO">
+		select t.* from (select sub.*, rownum as rnum from (select * from
+		bbs order by bbs_date DESC, bbs_num desc) sub) t
+		where rnum between #{startNo} and #{endNo}
+	</select>
+	<delete id="delone" parameterType="String">
+		delete from bbs where bbs_num=#{dno}
+	</delete>
+	<select id="selectOne" parameterType="String" resultType="com.cafe.vo.BBSVO">
+		select * from bbs where bbs_num=#{mno}
+	</select>
+	<update id="updateOne" parameterType="com.cafe.vo.BBSVO">
+	update bbs set bbs_flag=#{bbs_flag}, bbs_pass=#{bbs_pass}, bbs_title=#{bbs_title},
+	bbs_comment=#{bbs_comment} where bbs_num=#{bbs_num}
+	</update>
+	<update id="updatecnt">
+	update bbs set bbs_cnt=bbs_cnt+1 where bbs_num=#{vno}
+	</update>
+	<select id="totalcnt" resultType="int">
+		select count(*) from bbs
+	</select>
+	
+	<!-- save file name -->
+	<insert id="saveFile">
+		insert into bbs_files values ((select max(bbs_num) from bbs), #{fname})	
+	</insert>
+	<select id="selectFiles" resultType="String">
+		select bbs_filename from bbs_files where bbs_num=#{vno}
+	</select>
+	
+</mapper>

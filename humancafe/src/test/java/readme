@@ -1,0 +1,126 @@
+select * from member;
+drop table member;
+
+create table member(
+id varchar2(8) primary key,
+pass varchar2(8) not null,
+tel varchar2(13),
+email varchar2(20));
+select * from member;
+alter table member add indate timestamp default sysdate;
+desc member;
+
+create table bbs(
+bbs_flag varchar2(20),
+bbs_num number(1) primary key,
+bbs_wr varchar2(20),
+bbs_pass varchar2(8),
+bbs_title varchar2(20),
+bbs_comment varchar2(100),
+bbs_date timestamp default sysdate);
+
+create sequence bbs_seq;
+insert into bbs values ('n',bbs_seq.nextval,'abc',' 오후','1234','날씨좋음',default);
+select * from bbs;
+commit;
+
+
+ 마이바티스 적용 절차..
+ 1. pom.xml에서 필요한 드라이버 설정하기
+ 이것을 어디에다가 붙혀 넣느냐? </dependencies> 안쪽에다가 붙혀 넣는다.
+ <!--  추가할 라이브러리를 설정합니다. -->
+		<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
+		<dependency>
+    		<groupId>com.oracle.database.jdbc</groupId>
+    		<artifactId>ojdbc8</artifactId>
+    		<version>12.2.0.1</version>
+		</dependency>    
+		
+		<!--  mybatis 라이브러리 -->
+		<!-- MyBatis 연동 라이브러리 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.8</version>
+		</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		
+		
+
+ 2. 의존성 설정해야 한다...
+ 어디냐 하느냐? root-context.xml 에 한단다.
+ 어떤 빈을 설정하느냐? datasource, sqlsessionFactory, sqlsessionTemplate 를 한단다.
+ 샘플이 있느냐? 있단다.
+ 뭐가 중요하느냐? datasource는 데이테베이스 정보가 중요하단다. 오타내지 말아라
+ sqlsessionFactory는 mapperlocations가 중요하단다. mapper의 위치가 정확한지 보아라
+ 
+ 좀더 멋진 중요사항 없느냐?  의존관계를 보아라... 
+ <!-- 오라클 bean -->
+	<bean
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+	id="dataSource">  <!--  한 개가 빈설정.. 객체 설정.. 객체만들어 달라고 하는 것.. -->
+		<property name="driverClassName"  
+		value ="oracle.jdbc.driver.OracleDriver"> <!-- 객체의 변수 -->				
+		</property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+		<property name="username" value="system"></property>
+		<property name="password" value="1111"></property>	
+	</bean>
+	<!--  factory bean  쿼리문 공장 -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations"
+		value="classpath:/mapper/*Mapper.xml"></property>
+	
+	</bean>
+	<!--  sqlsessionTemplate spring과 연동하기 위한 객체 -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
+		<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+		
+	</bean>
+ 
+ 
+ 3. 이제는 dao에서 mybatis의 sqlsession을 호출하는 부분을 해보자.
+    새로운 기능이 추가되었으니.. 작업도 하자..
+    현재는 member table dao만 정의 되어 있다..
+  글쓰기는 bbs테이블이다.. 그래서 새로 만드는 것이 좋겠다. 순서는 인터페이스 먼저 그리고 구현
+ 
+ 
+ 
+ 
+ 4. 컨트롤러에서 DAO객체에 글쓰기 작업을 호출한다.
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

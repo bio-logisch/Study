@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf8"
 	pageEncoding="utf8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!--  jstl 문법을 사용하겠다.. jsp교재에 있음.. c로 시작하겠다. -->
 <!DOCTYPE html>
 <html lang="kor">
 <head>

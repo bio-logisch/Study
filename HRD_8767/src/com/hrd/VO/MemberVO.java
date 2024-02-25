@@ -2,13 +2,13 @@ package com.hrd.VO;
 
 public class MemberVO {
 	
-	int custno;
-	String custname;
-	String phone;
-	String address;
-	String joindate;
-	String grade;
-	String city;
+	int custno = 0;
+	String custname = null;
+	String phone = null;
+	String address = null;
+	String joindate = null;
+	String grade = null;
+	String city = null;
 	
 	public int getCustno() {
 		return custno;

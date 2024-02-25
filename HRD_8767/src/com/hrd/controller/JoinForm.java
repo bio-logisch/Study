@@ -29,15 +29,12 @@ public class JoinForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-			
-		// Model작업..
-		MemberDAO mdao = MemberDAO.getInstance(); //싱글톤으로 작성(의무는 아님)
+		MemberDAO mdao = MemberDAO.getInstance(); //싱글톤
 		int nowcnt = mdao.nowCnt();
-		
+		String nowdate = mdao.nowDate().substring(0,10);
 		// view 전달.
 		request.setAttribute("nownumber", nowcnt); //("변수명", 값)		
-	
+		request.setAttribute("nowdate", nowdate);
 		// view지정..
 		String url ="join.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
@@ -52,5 +49,4 @@ public class JoinForm extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

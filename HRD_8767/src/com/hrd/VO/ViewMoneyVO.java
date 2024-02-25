@@ -2,10 +2,10 @@ package com.hrd.VO;
 
 public class ViewMoneyVO {
 	
-	int custno;
-	String custname;
-	String custgrade;
-	int totalprice;
+	int custno = 0;
+	String custname = null;
+	String custgrade = null;
+	int totalprice = 0;
 	
 	public int getCustno() {
 		return custno;
